@@ -20,15 +20,19 @@
                                 <label for="nome" class="col-md-2 col-form-label text-md-right">Nome</label>
 
                                 <div class="col-md-10">
-                                    <input id="nome" type="text" class="form-control" name="nome" required autocomplete="name" value="{{$curso->nome}}">
+                                    <input id="nome" type="text" class="form-control" name="nome" required autocomplete="name">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label for="id_professor" class="col-md-2 col-form-label text-md-right">ID do professor</label>
+                                <label for="id_professor" class="col-md-2 col-form-label text-md-right">Professor</label>
 
                                 <div class="col-md-10">
-                                    <input id="id_professor" type="number" class="form-control" name="id_professor" required>
+                                    <select class="custom-select form-control" id="id_professor" name="id_professor" required>
+                                        @foreach( $professores as $professor )
+                                            <option value="{{$professor->id_professor}}">{{$professor->nome}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 

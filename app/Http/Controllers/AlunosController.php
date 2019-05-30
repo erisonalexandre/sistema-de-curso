@@ -21,7 +21,13 @@ class AlunosController extends Controller
     public function edit(Request $request)
     {
         $aluno = Aluno::find($request->id_aluno);
-        return view('alunos.edit',compact('aluno'));
+        $cursos = Curso::query()->get();
+        if ($cursos->count()<=0)
+        {
+            $request->session()->flash('mensagem','Por favor, adicione um curso antes!');
+            return redirect('cursos/create');
+        }
+        return view('alunos.edit',compact('aluno','cursos'));
     }
 
     public function create(Request $request)
@@ -60,6 +66,13 @@ class AlunosController extends Controller
         $aluno = Aluno::find($id_aluno);
         $aluno->nome = $request->nome;
         $aluno->data_nascimento = $request->data_nascimento;
+        $aluno->cep = $request->cep;
+        $aluno->logradouro = $request->logradouro;
+        $aluno->numero = $request->numero;
+        $aluno->cidade = $request->cidade;
+        $aluno->bairro = $request->bairro;
+        $aluno->estado = $request->estado;
+        $aluno->id_curso = $request->id_curso;
         $aluno->save();
 
         return redirect()->route('listar_alunos');

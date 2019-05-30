@@ -22,7 +22,16 @@ class CursosController extends Controller
     public function edit(Request $request)
     {
         $curso = Curso::find($request->id_curso);
-        return view('cursos.edit',compact('curso'));
+
+        $professores = Professor::query()->get();
+
+        if($professores->count()<=0)
+        {
+            $request->session()->flash('mensagem','Por favor, adicione um professor antes!');
+            return redirect('professores/create');
+        }
+
+        return view('cursos.edit',compact('curso','professores'));
     }
 
     public function create(Request $request)
@@ -34,7 +43,9 @@ class CursosController extends Controller
             $request->session()->flash('mensagem','Por favor, adicione um professor antes!');
             return redirect('professores/create');
         }
+
         $mensagem = $request->session()->get('mensagem');
+
         return view('cursos.create',compact('professores','mensagem'));
     }
 
@@ -71,7 +82,7 @@ class CursosController extends Controller
     {
         $curso = Curso::find($id_curso);
         $curso->nome = $request->nome;
-        $curso->data_nascimento = $request->data_nascimento;
+        $curso->id_professor = $request->id_professor;
         $curso->save();
 
         return redirect()->route('listar_cursos');
