@@ -20,7 +20,7 @@
                                 <label for="nome" class="col-md-2 col-form-label text-md-right">Nome</label>
 
                                 <div class="col-md-10">
-                                    <input id="nome" type="text" class="form-control" name="nome" required autocomplete="name">
+                                    <input value="{{$curso->nome}}" id="nome" type="text" class="form-control" name="nome" required autocomplete="name">
                                 </div>
                             </div>
 
